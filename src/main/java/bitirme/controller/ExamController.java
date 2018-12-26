@@ -1,0 +1,90 @@
+package bitirme.controller;
+
+
+import bitirme.model.Question;
+import bitirme.model.State;
+import bitirme.model.User;
+import bitirme.service.imp.IExamService;
+import bitirme.service.imp.IUserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.io.Serializable;
+import java.util.List;
+
+@RestController
+public class ExamController implements Serializable {
+
+    @Autowired
+    IExamService examService;
+
+    @Autowired
+    IUserService userService;
+
+    @GetMapping("checkexam")
+    public ResponseEntity<State> examCheck(@RequestParam("userId") String userId, @RequestParam("userPassword") String userPassword) {
+
+
+        int userIdInt = Integer.valueOf(userId);
+        State state = null;
+        ResponseEntity r = new ResponseEntity<>(state, HttpStatus.OK);
+
+        try {
+            User user = userService.getUserById(userIdInt);
+            String password = user.getUserPassword();
+
+            if (userPassword.equals(password)) {
+
+                state = examService.examDateValidation(userIdInt);
+                if (state.getState().equals("ready")) {
+                    r = new ResponseEntity<>(state, HttpStatus.OK);
+                } else if (state.getState().equals("not yet")) {
+                    r = new ResponseEntity<>(state, HttpStatus.OK);
+                } else if (state.getState().equals("passed")) {
+                    r = new ResponseEntity<>(state, HttpStatus.OK);
+                }
+            } else
+                r = new ResponseEntity<>(state, HttpStatus.OK);
+
+        } catch (Exception e) {
+            r = new ResponseEntity<State>(HttpStatus.NOT_FOUND);
+        }
+        return r;
+    }
+
+    @PostMapping("downloadclassicexam")
+    public ResponseEntity<List<Question>> dLCExam(@RequestParam("examId") String examId) {
+
+        List<Question> questions = null;
+        int examIdInt = Integer.valueOf(examId);
+        try {
+            questions = examService.dLCExam(examIdInt);
+            return new ResponseEntity<>(questions, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(questions, HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //    @GetMapping("get_admins")
+//    public ResponseEntity<List<Admin>> getAllAdmins() throws EntityNotFoundException {
+//        List<Admin> list = adminService.getAdminList();
+//        return new ResponseEntity(new ResponseAdmin(list), HttpStatus.OK);
+//    }
+    @PostMapping("downloadtestexam")
+    public ResponseEntity<List<Question>> dLTExam(@RequestParam("examId") String examId) {
+
+        int examIdInt = Integer.valueOf(examId);
+        try {
+            List<Question> questions = examService.dLTExam(examIdInt);
+            return new ResponseEntity<>(questions, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+}
