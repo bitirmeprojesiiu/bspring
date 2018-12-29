@@ -20,5 +20,5 @@ public interface IExamDao {
 
     List<Question> dLTExam(int examId) throws ParseException;
 
-    String getUserIdWithExamId(int examId);
+    int getUserIdWithExamId(int examId);
 }

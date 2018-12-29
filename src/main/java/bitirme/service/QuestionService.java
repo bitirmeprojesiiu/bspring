@@ -15,10 +15,14 @@ public class QuestionService implements IQuestionService {
     IQuestionDao questionDao;
 
     @Override
-    public List<Question> getAllQuesitons(int examId) {
-        return questionDao.getAllQuesitons(examId);
+    public List<Question> getAllClassicExamQuesitons(int examId) {
+        return questionDao.getAllClassicExamQuesitons(examId);
     }
 
+    @Override
+    public List<Question> getAllTestExamQuesitons(int examId) {
+        return questionDao.getAllTestExamQuesitons(examId);
+    }
   /*  @Override
     public boolean isExamValid(String examId) {
         return questionDao.isExamValid(examId);

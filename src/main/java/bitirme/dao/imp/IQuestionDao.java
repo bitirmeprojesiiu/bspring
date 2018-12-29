@@ -4,6 +4,7 @@ import java.util.List;
 
 public interface IQuestionDao {
 
-    List getAllQuesitons(int examId);
+    List getAllClassicExamQuesitons(int examId);
+    List getAllTestExamQuesitons(int examId);
 
 }

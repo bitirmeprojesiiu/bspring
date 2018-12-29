@@ -22,6 +22,13 @@ public class ClassicExam {
     @OneToMany(targetEntity=Question.class ,mappedBy = "examId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Question> questions= new ArrayList<Question>();
 
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
+    }
 
     public int getExamId() {
         return examId;

@@ -32,7 +32,7 @@ public class ExamService implements IExamService {
     }
 
     @Override
-    public String getUserIdWithExamId (int examId){
+    public int getUserIdWithExamId (int examId){
         return examDao.getUserIdWithExamId(examId);
     }
 

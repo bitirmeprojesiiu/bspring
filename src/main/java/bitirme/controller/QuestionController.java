@@ -25,6 +25,7 @@ public class QuestionController implements Serializable {
     IExamService examService;
 
     //SINAV TARİHİ GEÇERLİYSE SINAV SORULARINI GETİRİYOR
+   /*
     @GetMapping("get_all_questions")
     public ResponseEntity<Question> getQuestions(@RequestParam("examId") String examId) {
 
@@ -47,6 +48,7 @@ public class QuestionController implements Serializable {
             return new ResponseEntity<Question>((Question) list, HttpStatus.NOT_FOUND);
         }
     }
+    */
 
 //    @GetMapping("checkexam")
 //    public ResponseEntity<State> checkExam(@RequestParam("password") String password, @RequestParam("userId") String userId) {

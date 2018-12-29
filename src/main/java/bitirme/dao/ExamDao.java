@@ -111,62 +111,71 @@ public class ExamDao implements IExamDao {
             long diffDays = diff / (24 * 60 * 60 * 1000);
 
             //sınava 5 dj veya daha az varsa veya sınav zamanı gelmişse
-            if ((currentDate.after(beginningDate) && currentDate.before(endingDate)) || (diff <= 1000*60*5)) {
+            if ((currentDate.after(beginningDate) && currentDate.before(endingDate)) || ((diff <= 1000*60*5)) && (diff>0)){
 
                 state.setState("ready");
                 return state;
 
-            }else if (diff > 1000*60*5) { //sınava 5 dk'dan fazla varsa
+            }else if(currentDate.after(endingDate)){ //sınavın süresi geçmişse passed
+                state.setState("passed");
+                return state;
+            }
+            else if (diff > 1000*60*5) { //sınava 5 dk'dan fazla varsa
 
                 state.setState("not yet");
                 return state;
 
-            }else{ //sınavın süresi geçmişse passed
-                state.setState("passed");
             }
 
 
         }
         //eğer geçerli sınav yoksa invalid dönüyor
-        else
+        else {
             state.setState("invalid");
-
+        }
 
         return state;
     }
 
     @Override
-    public String getUserIdWithExamId(int examId) {
+    public int getUserIdWithExamId(int examId) {
 
-        String query = "SELECT userId FROM usersExam as ue WHERE ue.examId=?";
-        List uId = entityManager.createQuery(query).setParameter(1, examId).getResultList();
-        if (uId.size() > 0) {
-            String userId = (String) uId.get(0);
+        String query = "FROM UsersExam as ue WHERE ue.examId=" +examId;
+        List<UsersExam> usersExams = (List<UsersExam>) entityManager.createQuery(query).getResultList();
+
+        if (usersExams.size() > 0) {
+            int userId  = usersExams.get(0).getUserId();
+          //  String userId = (String) usersExams.get(0).getUserId();
             return userId;
         } else
-            return null;
+            return 0;
     }
 
 
     @Override
     public List<Question> dLCExam(int examId) throws ParseException {
 
-        String query = "SELECT usersExam.userId FROM usersExam as ue WHERE ue.examId=?";
-        String query2 = "SELECT exam.format FROM exam as e WHERE ue.examId=?";
-        List uId = entityManager.createQuery(query).setParameter(1, examId).getResultList();
-        List format = entityManager.createQuery(query2).setParameter(1, examId).getResultList();
+        //SELECT usersExam.userId
+        String query = "FROM UsersExam as ue WHERE ue.examId=" + examId;
+        //SELECT exam.format
+        String query2 = "FROM ClassicExam as ce WHERE ce.examId=" +examId;
 
-        int usId = Integer.valueOf((String) uId.get(0));
-        String examFormat = (String) format.get(0);
+        List<UsersExam> usersExams = (List<UsersExam>) entityManager.createQuery(query).getResultList();
+
+        int usId = usersExams.get(0).getUserId();
+
+        List <ClassicExam> classicExam = (List<ClassicExam>)entityManager.createQuery(query2).getResultList();
+
+        String examFormat=classicExam.get(0).getFormat();
+
 
         State state = examDateValidation(usId);
-        String validation = state.getState();
 
         //sınav tipi kontrolü//klasikse alacak soruları
         if (examFormat.equals("classic")) {
             //sınav zamanı kontrolü
-            if (validation.equals("ready")) {
-                return questionDao.getAllQuesitons(examId);
+            if (state.getState().equals("ready")) {
+                return questionDao.getAllClassicExamQuesitons(examId);
             } else
                 return null;
         } else
@@ -176,22 +185,26 @@ public class ExamDao implements IExamDao {
     @Override
     public List<Question> dLTExam(int examId) throws ParseException {
 
-        String query = "SELECT usersExam.userId FROM usersExam as ue WHERE ue.examId=?";
-        String query2 = "SELECT exam.format FROM exam as e WHERE ue.examId=?";
+        //SELECT usersExam.userId
+        String query = "FROM UsersExam as ue WHERE ue.examId=" +examId;
+        //SELECT exam.format
+        String query2 = "FROM TestExam as texam WHERE texam.examId=" +examId;
 
-        List uId = entityManager.createQuery(query).setParameter(1, examId).getResultList();
-        List format = entityManager.createQuery(query2).setParameter(1, examId).getResultList();
+        List<UsersExam> usersExams = (List<UsersExam>) entityManager.createQuery(query).getResultList();
 
-        int usId = Integer.valueOf((String) uId.get(0));
-        String examFormat = (String) format.get(0);
+        int usId = usersExams.get(0).getUserId();
+
+        List <TestExam> classicExam = (List<TestExam>)entityManager.createQuery(query2).getResultList();
+
+        String examFormat=classicExam.get(0).getFormat();
         State state = examDateValidation(usId);
-        String validation = state.getState();
+
 
         //sınav tipi kontrolü//klasikse alacak soruları
         if (examFormat.equals("test")) {
             //sınav zamanı kontrolü
-            if (validation.equals("ready")) {
-                return questionDao.getAllQuesitons(examId);
+            if (state.getState().equals("ready")) {
+                return questionDao.getAllTestExamQuesitons(examId);
             } else
                 return null;
         } else

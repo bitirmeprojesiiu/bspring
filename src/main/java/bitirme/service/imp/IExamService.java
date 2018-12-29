@@ -13,7 +13,7 @@ public interface IExamService {
 
     List<Question> dLCExam(int examId) throws ParseException;
 
-    String getUserIdWithExamId(int examId);
+    int getUserIdWithExamId(int examId);
 
     State examDateValidation(int userId) throws ParseException;
 }
