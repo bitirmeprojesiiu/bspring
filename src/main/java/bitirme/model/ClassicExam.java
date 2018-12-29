@@ -2,6 +2,7 @@ package bitirme.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -15,8 +16,8 @@ public class ClassicExam {
     private String duration;
     private String number;
     private String format;
-    private String examStartingDate;
-    private String examFinishingDate;
+    private Date examStartingDate;
+    private Date examFinishingDate;
 
     @OneToMany(targetEntity=Question.class ,mappedBy = "examId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Question> questions= new ArrayList<Question>();
@@ -54,19 +55,19 @@ public class ClassicExam {
         this.format = format;
     }
 
-    public String getExamStartingDate() {
+    public Date getExamStartingDate() {
         return examStartingDate;
     }
 
-    public void setExamStartingDate(String examStartingDate) {
+    public void setExamStartingDate(Date examStartingDate) {
         this.examStartingDate = examStartingDate;
     }
 
-    public String getExamFinishingDate() {
+    public Date getExamFinishingDate() {
         return examFinishingDate;
     }
 
-    public void setExamFinishingDate(String examFinishingDate) {
+    public void setExamFinishingDate(Date examFinishingDate) {
         this.examFinishingDate = examFinishingDate;
     }
 }

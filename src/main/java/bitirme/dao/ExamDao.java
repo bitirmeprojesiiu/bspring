@@ -23,28 +23,26 @@ public class ExamDao implements IExamDao {
 
 
     @Override
-    public UsersExam getUsersExamById(int userId) {
-        return entityManager.find(UsersExam.class, userId);
+    public List<UsersExam> getUsersExamById(int userId) {
+        String query = "FROM UsersExam as usersexam WHERE usersexam.userId=" + userId;
+        return (List<UsersExam>) entityManager.createQuery(query).getResultList();
+
     }
 
 
     //bu user için tanımlı sınav var mı?
     @Override
-    public boolean examValidation (int userId){
+    public boolean examValidation(int userId) {
 
         // verilen userId için users exam tablosundaki bilgileri aldım ve usersexam'e attım, examid'sini examId'ye attım
-        UsersExam usersExam = getUsersExamById(userId);
+        //  UsersExam usersExam = (UsersExam) getUsersExamById(userId);
+
+        List<UsersExam> usersExamList = getUsersExamById(userId);
+
+        UsersExam usersExam = usersExamList.get(0);
 
         //kullanıcı için sınav tanımlanmamışsa veya sınavın türü belli değilse false dönüyor.
-        if (usersExam.equals(null) && usersExam.getExamType().equals(null)){
-
-            return false;
-
-        }
-
-        else
-
-        return true;
+        return usersExam.getExamType() != null;
     }
 
     //exam'in  tarihinin geçerli olup olmadığını kontrol et
@@ -54,87 +52,78 @@ public class ExamDao implements IExamDao {
         //geri döneceği state objesini oluşturdum
         State state = new State();
 
-        String fDate = null;
-        String lDate = null;
+        Date beginningDate = null;
+        Date endingDate = null;
 
         //verilen userId'ye göre, users exam tablosundaki bilgileri bu userId için aldım
-        UsersExam usersExam = entityManager.find(UsersExam.class, userId);
+        //String query ="FROM UsersExam WHERE userId=:userId";
+        //UsersExam usersExam = (UsersExam) entityManager.createQuery(query).getResultList()
+        UsersExam usersExam = getUsersExamById(userId).get(0);
 
         //eğer kullanıcı için tanımlanmış bir sınav varsa buaraya girip tarihini kontrol edecek.
-        if (examValidation(userId)== true){
+        if (examValidation(userId)) {
 
             //Sınavın ıdsini aldım.
-            int eId= usersExam.getExamId();
+            int eId = usersExam.getExamId();
 
             //state'i sorgulayıp sınavın test mi klasik mi olduğunu aldım
-            String query1 = "FROM state WHERE state.examId = ?";
-            state = (State) entityManager.createQuery(query1).setParameter(1,"eId");
+            String query1 = "FROM State as state WHERE state.examId = " + eId;
+            List<State> stateList = (List<State>) entityManager.createQuery(query1).getResultList();
 
+            state = stateList.get(0);
 
             if (state.getExamType().equals("test")) {
 
                 //sınav testse testexam tabl'dan examıd bu olanın bilgilerini al
-                String query = "FROM testexam WHERE examId = ?";
+                String query2 = "FROM TestExam as testexam WHERE examId = " + eId;
 
-                TestExam testExam = (TestExam) entityManager.createQuery(query).setParameter(1, "eId");
+                TestExam testExam = (TestExam) entityManager.createQuery(query2).getResultList().get(0);
 
                 //geçerli sınavın başlangıç ve bitiş tarihlerini aldım.
-                fDate = testExam.getExamStartingDate();
-                lDate = testExam.getExamFinishingDate();
+                beginningDate = testExam.getExamStartingDate();
+                endingDate = testExam.getExamFinishingDate();
+
+            } else if (state.getExamType().equals("klasik")) {
+                //eğer sınav test değil, klasikse buraya girip bu sprguyu kullanacak
+
+                //sınav testse testexam tabl'dan examıd bu olanın bilgilerini al
+                String query3 = "FROM ClassicExam as classicexam WHERE examId = " + eId;
+
+                ClassicExam classicExam = (ClassicExam) entityManager.createQuery(query3).getResultList().get(0);
+
+                //geçerli sınavın başlangıç ve bitiş tarihlerini aldım.
+                beginningDate = classicExam.getExamStartingDate();
+                endingDate = classicExam.getExamFinishingDate();
 
             }
+            // bu date formatına göre bugünün tarihini aldım
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
+            Date currentDate = new Date();
+            simpleDateFormat.format(currentDate);
 
-            //eğer sınav test değil, klasikse buraya girip bu sprguyu kullanacak
-                else if (state.getExamType().equals("klasik")) {
+            //datelerin formatını düzenledim ve sınavın son tarihine ne kadar kaldığını hesapladım.
+            long diff = beginningDate.getTime() - currentDate.getTime();
 
-                    //sınav testse testexam tabl'dan examıd bu olanın bilgilerini al
-                    String query = "FROM classicexam WHERE examId = ?";
+            //kalan zamanı gün saat dakika ve saniye cinsine çevirme
+            long diffSeconds = diff / 1000 % 60;
+            long diffMinutes = diff / (60 * 1000) % 60;
+            long diffHours = diff / (60 * 60 * 1000) % 24;
+            long diffDays = diff / (24 * 60 * 60 * 1000);
 
-                    ClassicExam classicExam = (ClassicExam) entityManager.createQuery(query).setParameter(1, "eId");
+            //sınava 5 dj veya daha az varsa veya sınav zamanı gelmişse
+            if ((currentDate.after(beginningDate) && currentDate.before(endingDate)) || (diff <= 1000*60*5)) {
 
-                    //geçerli sınavın başlangıç ve bitiş tarihlerini aldım.
-                    fDate = classicExam.getExamStartingDate();
-                    lDate = classicExam.getExamFinishingDate();
+                state.setState("ready");
+                return state;
 
-                }
+            }else if (diff > 1000*60*5) { //sınava 5 dk'dan fazla varsa
 
+                state.setState("not yet");
+                return state;
 
-                // bu date formatına göre bugünün tarihini aldım
-                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm");
-                Date now = new Date();
-                simpleDateFormat.format(now);
-
-
-                Date fdateTime;
-                Date ldateTime;
-
-                //datelerin formatını düzenledim ve sınavın son tarihine ne kadar kaldığını hesapladım.
-                fdateTime = simpleDateFormat.parse(fDate);
-                ldateTime = simpleDateFormat.parse(lDate);
-                long diff = fdateTime.getTime() - now.getTime();
-
-                //kalan zamanı gün saat dakika ve saniye cinsine çevirme
-               long diffSeconds = diff / 1000 % 60;
-               long diffMinutes = diff / (60 * 1000) % 60;
-               long diffHours = diff / (60 * 60 * 1000) % 24;
-               long diffDays = diff / (24 * 60 * 60 * 1000);
-
-                //sınava 5 dj veya daha az varsa veya sınav zamanı gelmişse
-                if (now.after(fdateTime) && now.before(ldateTime) || now.before(fdateTime) && diffDays ==0 && diffHours==0 && diffMinutes <= 5) {
-
-                    state.setState("ready");
-                    return state;
-                }
-
-                //sınava 5 dk'dan fazla varsa
-                if (now.before(fdateTime) && diff > 5) {
-                    state.setState("not yet");
-                    return state;
-                }
-
-                //sınavın süresi geçmişse passed
-                    else
-                    state.setState("passed");
+            }else{ //sınavın süresi geçmişse passed
+                state.setState("passed");
+            }
 
 
         }

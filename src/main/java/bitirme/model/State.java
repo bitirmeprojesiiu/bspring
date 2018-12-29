@@ -13,6 +13,8 @@ public class State {
     //valid mi --- valid,invalid
     private String state;
 
+    private int examId;
+
 //    @Id
 //    private String examId;
     //test,classic
@@ -21,6 +23,14 @@ public class State {
     private String time;
     //yyyy/MM/dd HH:mm
 
+
+    public int getExamId() {
+        return examId;
+    }
+
+    public void setExamId(int examId) {
+        this.examId = examId;
+    }
 
     public State() {
     }

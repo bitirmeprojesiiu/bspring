@@ -10,7 +10,7 @@ import java.util.List;
 
 public interface IExamDao {
 
-    UsersExam getUsersExamById(int userId);
+    List<UsersExam> getUsersExamById(int userId);
 
     boolean examValidation(int userId);
 
