@@ -1,5 +1,7 @@
 package bitirme.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -19,8 +21,10 @@ public class ClassicExam {
     private Date examStartingDate;
     private Date examFinishingDate;
 
-    @OneToMany(targetEntity=Question.class ,mappedBy = "examId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Question> questions= new ArrayList<Question>();
+  @OneToMany(targetEntity=Question.class ,mappedBy = "examId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+  @JsonIgnore
+  private List<Question> questions= new ArrayList<Question>();
+
 
     public List<Question> getQuestions() {
         return questions;

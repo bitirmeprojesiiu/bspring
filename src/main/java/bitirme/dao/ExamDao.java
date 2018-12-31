@@ -175,7 +175,7 @@ public class ExamDao implements IExamDao {
         if (examFormat.equals("classic")) {
             //sınav zamanı kontrolü
             if (state.getState().equals("ready")) {
-                return questionDao.getAllClassicExamQuesitons(examId);
+               return questionDao.getAllClassicExamQuesitons(examId);
             } else
                 return null;
         } else

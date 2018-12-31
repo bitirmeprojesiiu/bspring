@@ -16,7 +16,8 @@ public class QuestionService implements IQuestionService {
 
     @Override
     public List<Question> getAllClassicExamQuesitons(int examId) {
-        return questionDao.getAllClassicExamQuesitons(examId);
+        return null;
+                //questionDao.getAllClassicExamQuesitons(examId);
     }
 
     @Override

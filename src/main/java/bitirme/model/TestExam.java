@@ -1,5 +1,7 @@
 package bitirme.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,15 +23,8 @@ public class TestExam {
     private Date examFinishingDate;
 
     @OneToMany(targetEntity=Question.class ,mappedBy = "examId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
     private List<Question> questions= new ArrayList<Question>();
-
-    public TestExam() {
-    }
-
-    public TestExam(int examId, List<Question> questions) {
-        this.examId = examId;
-        this.questions = questions;
-    }
 
     public int getExamId() {
         return examId;
@@ -37,38 +32,6 @@ public class TestExam {
 
     public void setExamId(int examId) {
         this.examId = examId;
-    }
-
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
-    public Date getExamStartingDate() {
-        return examStartingDate;
-    }
-
-    public void setExamStartingDate(Date examStartingDate) {
-        this.examStartingDate = examStartingDate;
-    }
-
-    public Date getExamFinishingDate() {
-        return examFinishingDate;
-    }
-
-    public void setExamFinishingDate(Date examFinishingDate) {
-        this.examFinishingDate = examFinishingDate;
-    }
-
-    public String format() {
-        return format;
-    }
-
-    public void setformat(String format) {
-        this.format = format;
     }
 
     public String getDuration() {
@@ -93,6 +56,32 @@ public class TestExam {
 
     public void setFormat(String format) {
         this.format = format;
+    }
+
+    public Date getExamStartingDate() {
+        return examStartingDate;
+    }
+
+    public void setExamStartingDate(Date examStartingDate) {
+        this.examStartingDate = examStartingDate;
+    }
+
+    public Date getExamFinishingDate() {
+        return examFinishingDate;
+    }
+
+    public void setExamFinishingDate(Date examFinishingDate) {
+        this.examFinishingDate = examFinishingDate;
+    }
+
+    public List<Question> getQuestions() {
+        return questions;
+    }
+
+    @OneToMany(targetEntity=Question.class ,mappedBy = "examId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+    @JsonIgnore
+    public void setQuestions(List<Question> questions) {
+        this.questions = questions;
     }
 
     @Override

@@ -12,7 +12,7 @@ public class Question {
     private int questionId;
 
     @ManyToOne(targetEntity = TestExam.class)
-    @JoinColumn(name = "exam_id")
+    @JoinColumn(name = "examId")
     private int examId;
 
     private String quest;
@@ -21,19 +21,34 @@ public class Question {
     private String choice3;
     private String choice4;
 
+    private String examFormat;
     private String answer;
 
-    public Question() {
+    public Question(String questionText, String choice1, String choice2, String choice3, String choice4, String answer) {
     }
 
     public Question(String quest) {
         this.quest = quest;
+    }
 
-        this.choice1 = choice1;
-        this.choice2 = choice2;
-        this.choice3 = choice3;
-        this.choice4 = choice4;
-        this.answer = answer;
+    public String getExamFormat() {
+        return examFormat;
+    }
+
+    public void setExamFormat(String examFormat) {
+        this.examFormat = examFormat;
+    }
+
+    public Question() {
+    }
+
+
+    public int getQuestionId() {
+        return questionId;
+    }
+
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
     }
 
     public int getExamId() {
@@ -42,26 +57,6 @@ public class Question {
 
     public void setExamId(int examId) {
         this.examId = examId;
-    }
-
-    public String getChoice2() {
-        return choice2;
-    }
-
-    public String getChoice3() {
-        return choice3;
-    }
-
-    public void setChoice3(String choice3) {
-        this.choice3 = choice3;
-    }
-
-    public int getQuestionId() {
-        return questionId;
-    }
-
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
     }
 
     public String getQuest() {
@@ -76,11 +71,11 @@ public class Question {
         return choice1;
     }
 
-    public void setChoice1(String answer1) {
+    public void setChoice1(String choice1) {
         this.choice1 = choice1;
     }
 
-    public String getAnswer2() {
+    public String getChoice2() {
         return choice2;
     }
 
@@ -88,11 +83,11 @@ public class Question {
         this.choice2 = choice2;
     }
 
-    public String getChoice33() {
+    public String getChoice3() {
         return choice3;
     }
 
-    public void setChoice33(String choice3) {
+    public void setChoice3(String choice3) {
         this.choice3 = choice3;
     }
 
@@ -111,7 +106,6 @@ public class Question {
     public void setAnswer(String answer) {
         this.answer = answer;
     }
-
 
     @Override
       public String toString(){
