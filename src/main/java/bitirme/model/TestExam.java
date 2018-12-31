@@ -3,13 +3,14 @@ package bitirme.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 @Entity
 @Table(name="testexam")
-public class TestExam {
+public class TestExam implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
@@ -22,13 +23,23 @@ public class TestExam {
     private Date examStartingDate;
     private Date examFinishingDate;
 
-    @OneToMany(targetEntity=Question.class ,mappedBy = "examId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    private List<Question> questions= new ArrayList<Question>();
+
+    public TestExam() {
+    }
+
+
+    public TestExam(String duration, String number, String format, Date examStartingDate, Date examFinishingDate) {
+        this.duration = duration;
+        this.number = number;
+        this.format = format;
+        this.examStartingDate = examStartingDate;
+        this.examFinishingDate = examFinishingDate;
+    }
 
     public int getExamId() {
         return examId;
     }
+
 
     public void setExamId(int examId) {
         this.examId = examId;
@@ -74,15 +85,6 @@ public class TestExam {
         this.examFinishingDate = examFinishingDate;
     }
 
-    public List<Question> getQuestions() {
-        return questions;
-    }
-
-    @OneToMany(targetEntity=Question.class ,mappedBy = "examId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
 
     @Override
     public String toString(){
@@ -90,7 +92,6 @@ public class TestExam {
                 "examId=" + examId +
                 ", starting date for exam='" + examStartingDate + '\'' +
                 ", last day for exam=" + examFinishingDate +
-                ", number of questions=" + questions.size() +
                 ", duration=" + duration +
                 '}';
     }

@@ -87,7 +87,7 @@ public class ExamDao implements IExamDao {
                 //eğer sınav test değil, klasikse buraya girip bu sprguyu kullanacak
 
                 //sınav testse testexam tabl'dan examıd bu olanın bilgilerini al
-                String query3 = "FROM ClassicExam as classicexam WHERE examId = " + eId;
+                String query3 = "FROM ClassicExam as classicexam WHERE classicExamId = " + eId;
 
                 ClassicExam classicExam = (ClassicExam) entityManager.createQuery(query3).getResultList().get(0);
 
@@ -158,7 +158,7 @@ public class ExamDao implements IExamDao {
         //SELECT usersExam.userId
         String query = "FROM UsersExam as ue WHERE ue.examId=" + examId;
         //SELECT exam.format
-        String query2 = "FROM ClassicExam as ce WHERE ce.examId=" +examId;
+        String query2 = "FROM ClassicExam as ce WHERE ce.classicExamId=" +examId;
 
         List<UsersExam> usersExams = (List<UsersExam>) entityManager.createQuery(query).getResultList();
 
@@ -175,7 +175,8 @@ public class ExamDao implements IExamDao {
         if (examFormat.equals("classic")) {
             //sınav zamanı kontrolü
             if (state.getState().equals("ready")) {
-               return questionDao.getAllClassicExamQuesitons(examId);
+                return null;
+               //return questionDao.getAllClassicExamQuestions(examId);
             } else
                 return null;
         } else
@@ -204,7 +205,7 @@ public class ExamDao implements IExamDao {
         if (examFormat.equals("test")) {
             //sınav zamanı kontrolü
             if (state.getState().equals("ready")) {
-                return questionDao.getAllTestExamQuesitons(examId);
+                return questionDao.getAllTestExamQuestions(examId);
             } else
                 return null;
         } else

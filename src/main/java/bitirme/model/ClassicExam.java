@@ -13,7 +13,7 @@ public class ClassicExam {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
-    private int examId;
+    private int classicExamId;
     //sınavın süresi
     private String duration;
     private String number;
@@ -21,25 +21,13 @@ public class ClassicExam {
     private Date examStartingDate;
     private Date examFinishingDate;
 
-  @OneToMany(targetEntity=Question.class ,mappedBy = "examId", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-  @JsonIgnore
-  private List<Question> questions= new ArrayList<Question>();
 
-
-    public List<Question> getQuestions() {
-        return questions;
+    public int getClassicExamId() {
+        return classicExamId;
     }
 
-    public void setQuestions(List<Question> questions) {
-        this.questions = questions;
-    }
-
-    public int getExamId() {
-        return examId;
-    }
-
-    public void setExamId(int examId) {
-        this.examId = examId;
+    public void setClassicExamId(int classicExamId) {
+        this.classicExamId = classicExamId;
     }
 
     public String getDuration() {

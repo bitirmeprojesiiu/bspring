@@ -2,18 +2,19 @@ package bitirme.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import java.io.Serializable;
 
 @Entity
 @Table(name="question")
-public class Question {
+public class Question implements Serializable {
 
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int questionId;
 
-    @ManyToOne(targetEntity = TestExam.class)
-    @JoinColumn(name = "examId")
     private int examId;
+
+    private int classicExamId;
 
     private String quest;
     private String choice1;
@@ -23,6 +24,14 @@ public class Question {
 
     private String examFormat;
     private String answer;
+
+    public int getClassicExamId() {
+        return classicExamId;
+    }
+
+    public void setClassicExamId(int classicExamId) {
+        this.classicExamId = classicExamId;
+    }
 
     public Question(String questionText, String choice1, String choice2, String choice3, String choice4, String answer) {
     }
