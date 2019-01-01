@@ -11,8 +11,36 @@ public class ClassicResult {
     private int classicResultId;
     private int userId;
     private int classicExamId;
-    private String name,surname,phonenumber,email,cheatControl;
+    private String name;
+    private String surname;
+    private String phonenumber;
+    private String email;
+    private String cheatControl;
     private String answer;
+
+    public int getClassicResultId() {
+        return classicResultId;
+    }
+
+    public void setClassicResultId(int classicResultId) {
+        this.classicResultId = classicResultId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
+
+    public int getClassicExamId() {
+        return classicExamId;
+    }
+
+    public void setClassicExamId(int classicExamId) {
+        this.classicExamId = classicExamId;
+    }
 
     public String getName() {
         return name;
@@ -44,22 +72,6 @@ public class ClassicResult {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public int getUserId() {
-        return userId;
-    }
-
-    public int getClassicResultId() {
-        return classicResultId;
-    }
-
-    public void setClassicResultId(int classicResultId) {
-        this.classicResultId = classicResultId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 
     public String getCheatControl() {
