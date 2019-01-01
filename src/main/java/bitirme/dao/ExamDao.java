@@ -5,6 +5,7 @@ import bitirme.dao.imp.IQuestionDao;
 import bitirme.model.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -13,11 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@Transactional
 @Repository
 public class ExamDao implements IExamDao {
 
     @PersistenceContext
     private EntityManager entityManager;
+
     @Autowired
     IQuestionDao questionDao;
 
@@ -47,7 +50,7 @@ public class ExamDao implements IExamDao {
 
     //exam'in  tarihinin geçerli olup olmadığını kontrol et
     @Override
-    public State examDateValidation(int userId) throws ParseException {
+    public State examDateValidation(int userId) {
 
         //geri döneceği state objesini oluşturdum
         State state = new State();
@@ -212,6 +215,31 @@ public class ExamDao implements IExamDao {
             return null;
     }
 
+    @Override
+    public void addTestExamResult (TestResult testResult){
+        entityManager.persist(testResult);
+    }
+
+    @Override
+    public void addClassicExamResult (ClassicResult classicResult){
+        entityManager.persist(classicResult);
+    }
+
+
+    @Override
+    public boolean classicResultExists(int classicResultId) {
+        String hql = "FROM ClassicResult as crs WHERE crs.classicResultId = " +classicResultId;
+        int count = entityManager.createQuery(hql).getResultList().size();
+        return count > 0;
+    }
+
+
+    @Override
+    public boolean testResultExists(int testResultId) {
+        String hql = "FROM TestResult as trs WHERE trs.testResultId = " +testResultId;
+        int count = entityManager.createQuery(hql).getResultList().size();
+        return count > 0;
+    }
 
 }
 

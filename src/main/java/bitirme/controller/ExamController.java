@@ -1,19 +1,15 @@
 package bitirme.controller;
 
 
-import bitirme.model.Question;
-import bitirme.model.State;
-import bitirme.model.User;
+import bitirme.model.*;
 import bitirme.service.imp.IExamService;
 import bitirme.service.imp.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.EntityNotFoundException;
 import java.io.Serializable;
 import java.util.List;
 
@@ -85,6 +81,25 @@ public class ExamController implements Serializable {
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @PostMapping("testresult")
+    public ResponseEntity<Void> testResult (@RequestBody TestResult testResult) throws EntityNotFoundException {
+        boolean flag= examService.addTestResult(testResult);
+        if (!flag){
+           return new  ResponseEntity("0", HttpStatus.OK);
+        }
+        return new ResponseEntity("1", HttpStatus.OK);
+    }
+
+
+    @PostMapping("classicresult")
+    public ResponseEntity<Void> classicResult (@RequestBody ClassicResult classicResult) throws EntityNotFoundException {
+        boolean flag= examService.addClassicResult(classicResult);
+        if (!flag){
+            return new  ResponseEntity("0", HttpStatus.OK);
+        }
+        return new ResponseEntity("1", HttpStatus.OK);
     }
 
 }

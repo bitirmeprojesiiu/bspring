@@ -1,8 +1,6 @@
 package bitirme.dao.imp;
 
-import bitirme.model.Question;
-import bitirme.model.State;
-import bitirme.model.UsersExam;
+import bitirme.model.*;
 
 import java.text.ParseException;
 import java.util.List;
@@ -21,4 +19,12 @@ public interface IExamDao {
     List<Question> dLTExam(int examId) throws ParseException;
 
     int getUserIdWithExamId(int examId);
+
+    void addTestExamResult (TestResult testResult);
+
+    void addClassicExamResult (ClassicResult classicResult);
+
+    boolean testResultExists(int testResultId);
+
+    boolean classicResultExists(int classicResultId);
 }

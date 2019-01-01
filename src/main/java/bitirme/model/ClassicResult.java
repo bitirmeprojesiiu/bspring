@@ -9,7 +9,8 @@ public class ClassicResult {
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int classicResultId;
-    private String tc;
+    private int userId;
+    private int classicExamId;
     private String name,surname,phonenumber,email,cheatControl;
     private String answer;
 
@@ -45,8 +46,8 @@ public class ClassicResult {
         this.email = email;
     }
 
-    public String getTc() {
-        return tc;
+    public int getUserId() {
+        return userId;
     }
 
     public int getClassicResultId() {
@@ -57,8 +58,8 @@ public class ClassicResult {
         this.classicResultId = classicResultId;
     }
 
-    public void setTc(String tc) {
-        this.tc = tc;
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getCheatControl() {

@@ -6,13 +6,19 @@ import javax.persistence.*;
 @Table(name="testresult")
 public class TestResult {
 
-
     @Id
     @GeneratedValue(strategy= GenerationType.AUTO)
     private int testResultId;
 
-    private String tc;
-    private String name,surname,phonenumber,email, trueanswer, falseanswer,cheatControl;
+    private int examId;
+    private int userId;
+    private String name;
+    private String surname;
+    private String phoneNumber;
+    private String email;
+    private String trueAnswer;
+    private String falseAnswer;
+    private String cheatControl;
 
     public int getTestResultId() {
         return testResultId;
@@ -20,6 +26,22 @@ public class TestResult {
 
     public void setTestResultId(int testResultId) {
         this.testResultId = testResultId;
+    }
+
+    public int getExamId() {
+        return examId;
+    }
+
+    public void setExamId(int examId) {
+        this.examId = examId;
+    }
+
+    public int getUserId() {
+        return userId;
+    }
+
+    public void setUserId(int userId) {
+        this.userId = userId;
     }
 
     public String getName() {
@@ -38,12 +60,12 @@ public class TestResult {
         this.surname = surname;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
@@ -54,28 +76,20 @@ public class TestResult {
         this.email = email;
     }
 
-    public String getTc() {
-        return tc;
+    public String getTrueAnswer() {
+        return trueAnswer;
     }
 
-    public void setTc(String tc) {
-        this.tc = tc;
+    public void setTrueAnswer(String trueAnswer) {
+        this.trueAnswer = trueAnswer;
     }
 
-    public String getTrueanswer() {
-        return trueanswer;
+    public String getFalseAnswer() {
+        return falseAnswer;
     }
 
-    public void setTrueanswer(String trueanswer) {
-        this.trueanswer = trueanswer;
-    }
-
-    public String getFalseanswer() {
-        return falseanswer;
-    }
-
-    public void setFalseanswer(String falseanswer) {
-        this.falseanswer = falseanswer;
+    public void setFalseAnswer(String falseAnswer) {
+        this.falseAnswer = falseAnswer;
     }
 
     public String getCheatControl() {

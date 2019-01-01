@@ -1,7 +1,9 @@
 package bitirme.service.imp;
 
+import bitirme.model.ClassicResult;
 import bitirme.model.Question;
 import bitirme.model.State;
+import bitirme.model.TestResult;
 
 import java.text.ParseException;
 import java.util.List;
@@ -16,4 +18,8 @@ public interface IExamService {
     int getUserIdWithExamId(int examId);
 
     State examDateValidation(int userId) throws ParseException;
+
+    boolean addTestResult(TestResult testResult);
+
+    boolean addClassicResult(ClassicResult classicResult);
 }
