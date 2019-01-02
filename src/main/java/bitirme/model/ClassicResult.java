@@ -13,7 +13,7 @@ public class ClassicResult {
     private int classicExamId;
     private String name;
     private String surname;
-    private String phonenumber;
+    private String phoneNumber;
     private String email;
     private String cheatControl;
     private String answer;
@@ -58,12 +58,12 @@ public class ClassicResult {
         this.surname = surname;
     }
 
-    public String getPhonenumber() {
-        return phonenumber;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setPhonenumber(String phonenumber) {
-        this.phonenumber = phonenumber;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getEmail() {
