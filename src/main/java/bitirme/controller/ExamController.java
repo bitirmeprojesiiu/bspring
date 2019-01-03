@@ -84,22 +84,29 @@ public class ExamController implements Serializable {
     }
 
     @PostMapping("testresult")
-    public ResponseEntity<Void> testResult (@RequestBody TestResult testResult) throws EntityNotFoundException {
+    public ResponseEntity<ResultResponse> testResult (@RequestBody TestResult testResult) throws EntityNotFoundException {
         boolean flag= examService.addTestResult(testResult);
+        ResultResponse response= new ResultResponse();
         if (!flag){
-           return new  ResponseEntity("0", HttpStatus.OK);
+            response.setResponse("OK");
+           return new  ResponseEntity(response, HttpStatus.OK);
         }
-        return new ResponseEntity("1", HttpStatus.OK);
+        response.setResponse("FAIL");
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
 
     @PostMapping("classicresult")
-    public ResponseEntity<Void> classicResult (@RequestBody ClassicResult classicResult) throws EntityNotFoundException {
+    public ResponseEntity<ResultResponse> classicResult (@RequestBody ClassicResult classicResult) throws EntityNotFoundException {
         boolean flag= examService.addClassicResult(classicResult);
+
+        ResultResponse response= new ResultResponse();
         if (!flag){
-            return new  ResponseEntity("0", HttpStatus.OK);
+            response.setResponse("OK");
+            return new  ResponseEntity(response, HttpStatus.OK);
         }
-        return new ResponseEntity("1", HttpStatus.OK);
+        response.setResponse("FAIL");
+        return new ResponseEntity(response, HttpStatus.OK);
     }
 
 }
