@@ -7,7 +7,6 @@ import javax.persistence.*;
 public class TestResult {
 
     @Id
-    @GeneratedValue(strategy= GenerationType.AUTO)
     private int testResultId;
 
     private int examId;

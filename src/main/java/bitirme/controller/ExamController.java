@@ -88,10 +88,14 @@ public class ExamController implements Serializable {
         boolean flag= examService.addTestResult(testResult);
         ResultResponse response= new ResultResponse();
         if (!flag){
-            response.setResponse("OK");
-           return new  ResponseEntity(response, HttpStatus.OK);
+            response.setResponse("FAIL");
+        //   return new  ResponseEntity(response, HttpStatus.OK);
         }
-        response.setResponse("FAIL");
+        else {
+            response.setResponse("OK");
+          //  return new ResponseEntity(response, HttpStatus.OK);
+        }
+
         return new ResponseEntity(response, HttpStatus.OK);
     }
 
@@ -102,11 +106,15 @@ public class ExamController implements Serializable {
 
         ResultResponse response= new ResultResponse();
         if (!flag){
-            response.setResponse("OK");
-            return new  ResponseEntity(response, HttpStatus.OK);
+            response.setResponse("FAIL");
+           // return new  ResponseEntity(response, HttpStatus.OK);
         }
-        response.setResponse("FAIL");
-        return new ResponseEntity(response, HttpStatus.OK);
+        else {
+            response.setResponse("OK");
+           // return new ResponseEntity(response, HttpStatus.OK);
+        }
+
+        return new  ResponseEntity(response, HttpStatus.OK);
     }
 
 }
