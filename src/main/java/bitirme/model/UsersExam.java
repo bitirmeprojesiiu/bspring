@@ -17,8 +17,18 @@ public class UsersExam {
     private int examId;
     private String userPassword;
 
+    private int classicExamId;
+
     private String examType;
 
+
+    public int getClassicExamId() {
+        return classicExamId;
+    }
+
+    public void setClassicExamId(int classicExamId) {
+        this.classicExamId = classicExamId;
+    }
 
     public int getUsersExamId() {
         return usersExamId;

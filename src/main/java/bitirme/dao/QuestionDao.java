@@ -70,15 +70,12 @@ if (examType.equals("test")){
 
         ArrayList<Question> classicQuestionsList = new ArrayList<>();
 
+        String examType;
 
-        ClassicExam classicExam = new ClassicExam();
-        Question question;
-        String examType = "test";
-
-        String query = "FROM ClassicExam as texam WHERE texam.examId = " + examId;
+        String query = "FROM ClassicExam as texam WHERE texam.classicExamId = " + examId;
         List<ClassicExam> classicExamList = entityManager.createQuery(query).getResultList();
 
-        String query1 = "FROM Question as question WHERE question.examId = " + examId;
+        String query1 = "FROM Question as question WHERE question.classicExamId = " + examId;
         List<Question> allQuestionsList = entityManager.createQuery(query1).getResultList();
 
         int numberOfQuestions = Integer.parseInt(classicExamList.get(0).getNumber());

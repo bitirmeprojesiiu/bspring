@@ -20,9 +20,19 @@ public class State {
     //test,classic
     @NotNull
     private String examType;
+    private int numberOfQuestion;
+    private int classicExamId;
     private String time;
     //yyyy/MM/dd HH:mm
 
+
+    public int getClassicExamId() {
+        return classicExamId;
+    }
+
+    public void setClassicExamId(int classicExamId) {
+        this.classicExamId = classicExamId;
+    }
 
     public int getExamId() {
         return examId;
@@ -42,6 +52,14 @@ public class State {
 //        this.examId = examId;
         this.examType = examType;
         this.time = time;
+    }
+
+    public int getNumberOfQuestion() {
+        return numberOfQuestion;
+    }
+
+    public void setNumberOfQuestion(int numberOfQuestion) {
+        this.numberOfQuestion = numberOfQuestion;
     }
 
     public State(State state) {

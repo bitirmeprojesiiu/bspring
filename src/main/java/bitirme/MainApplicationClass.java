@@ -12,7 +12,7 @@ public class MainApplicationClass {
         SpringApplication.run(MainApplicationClass.class, args);
     }
 
-    @RequestMapping(value = "/error", method = RequestMethod.GET)
+/*    @RequestMapping(value = "/error", method = RequestMethod.GET)
     public String error() {
         return "error";
     }
@@ -20,5 +20,5 @@ public class MainApplicationClass {
     @RequestMapping(value = "/home", method = RequestMethod.GET)
     public String homepage() {
         return "home";
-    }
+    } */
 }
