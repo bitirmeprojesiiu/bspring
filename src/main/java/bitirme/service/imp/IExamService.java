@@ -1,9 +1,6 @@
 package bitirme.service.imp;
 
-import bitirme.model.ClassicResult;
-import bitirme.model.Question;
-import bitirme.model.State;
-import bitirme.model.TestResult;
+import bitirme.model.*;
 
 import java.text.ParseException;
 import java.util.List;
@@ -22,4 +19,8 @@ public interface IExamService {
     boolean addTestResult(TestResult testResult);
 
     boolean addClassicResult(ClassicResult classicResult);
+
+    List<ClassicExam> getAllClassicExam();
+
+    List<TestExam> getAllTestExam();
 }

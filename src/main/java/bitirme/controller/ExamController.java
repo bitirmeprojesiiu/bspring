@@ -118,4 +118,26 @@ public class ExamController implements Serializable {
         return new  ResponseEntity(response, HttpStatus.OK);
     }
 
+    @GetMapping("getallclassicexam")
+    public ResponseEntity<List<ClassicExam>> getAllClassicExam (){
+        try {
+           List<ClassicExam> classicExamList= examService.getAllClassicExam();
+           return new ResponseEntity<>(classicExamList,HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("getalltestexam")
+    public ResponseEntity<List<TestExam>> getAllTestExam (){
+        try {
+            List<TestExam> classicExamList= examService.getAllTestExam();
+            return new ResponseEntity<>(classicExamList,HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

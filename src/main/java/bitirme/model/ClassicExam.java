@@ -1,11 +1,7 @@
 package bitirme.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Table(name="classicexam")
@@ -18,7 +14,10 @@ public class ClassicExam {
     private String duration;
     private String number;
     private String format;
+
+  // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss");
     private Date examStartingDate;
+
     private Date examFinishingDate;
 
 

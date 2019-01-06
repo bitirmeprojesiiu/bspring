@@ -27,4 +27,8 @@ public interface IExamDao {
     boolean testResultExists(int testResultId);
 
     boolean classicResultExists(int classicResultId);
+
+    List<ClassicExam> getAllClassicExam ();
+
+    List<TestExam> getAllTestExam ();
 }

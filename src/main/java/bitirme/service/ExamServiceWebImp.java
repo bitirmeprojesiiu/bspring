@@ -1,20 +1,22 @@
 package bitirme.service;
 
-import java.util.List;
-
+import bitirme.dao.ExamDao;
+import bitirme.dao.imp.IExamDao;
+import bitirme.model.ClassicExam;
+import bitirme.model.TestExam;
 import bitirme.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
-import bitirme.dao.ExamDao;
-import bitirme.model.ClassicExam;
-import bitirme.model.TestExam;
+import java.util.List;
 
 @Service
 public class ExamServiceWebImp implements ExamServiceWeb {
 
 	private ExamDao examRepository;
+
+	@Autowired
+	IExamDao examDao;
 	
 	@Autowired
 	public void setExamRepository(ExamDao examRepository) {
@@ -65,6 +67,16 @@ public class ExamServiceWebImp implements ExamServiceWeb {
 	@Override
 	public void createUser(User user) {
 
+	}
+
+	@Override
+	public List<ClassicExam> getAllClassicExam (){
+		return examDao.getAllClassicExam();
+	}
+
+	@Override
+	public List<TestExam> getAllTestExam (){
+		return examDao.getAllTestExam();
 	}
 
 }

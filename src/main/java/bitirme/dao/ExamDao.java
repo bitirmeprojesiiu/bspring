@@ -55,14 +55,12 @@ public class ExamDao implements IExamDao {
         int eId;
         //geri döneceği state objesini oluşturdum
         State state = new State();
-        State stateClassic = new State();
 
         Date beginningDate = null;
         Date endingDate = null;
 
         //verilen userId'ye göre, users exam tablosundaki bilgileri bu userId için aldım
-        //String query ="FROM UsersExam WHERE userId=:userId";
-        //UsersExam usersExam = (UsersExam) entityManager.createQuery(query).getResultList()
+
         UsersExam usersExam = getUsersExamById(userId).get(0);
         if (usersExam.getExamType().equals("test")){
            eId= usersExam.getExamId();
@@ -84,17 +82,9 @@ public class ExamDao implements IExamDao {
         if (examValidation(userId)) {
 
             //Sınavın ıdsini aldım.
-            //eId = usersExam.getExamId();
 
             //state'i sorgulayıp sınavın test mi klasik mi olduğunu aldım
-        /*    String query1 = "FROM State as state WHERE state.examId = " + eId;
-            List<State> stateList = (List<State>) entityManager.createQuery(query1).getResultList();
 
-            String query9 = "FROM State as state WHERE state.classicExamId = " + eId;
-            List<State> stateListClassic = (List<State>) entityManager.createQuery(query9).getResultList();
-
-            state = stateList.get(0);
-            stateClassic =stateListClassic.get(0); */
 
             if (state.getExamType().equals("test")) {
 
@@ -118,8 +108,6 @@ public class ExamDao implements IExamDao {
                 //geçerli sınavın başlangıç ve bitiş tarihlerini aldım.
                 beginningDate = classicExam.getExamStartingDate();
                 endingDate = classicExam.getExamFinishingDate();
-
-               // state = stateClassic;
 
             }
             // bu date formatına göre bugünün tarihini aldım
@@ -265,5 +253,21 @@ public class ExamDao implements IExamDao {
         return count > 0;
     }
 
+
+    @Override
+    public List<ClassicExam> getAllClassicExam(){
+
+        String query ="FROM ClassicExam ";
+        return (List<ClassicExam>) entityManager.createQuery(query).getResultList();
+
+    }
+
+    @Override
+    public List<TestExam> getAllTestExam(){
+
+        String query ="FROM TestExam ";
+        return (List<TestExam>) entityManager.createQuery(query).getResultList();
+
+    }
 }
 

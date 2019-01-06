@@ -1,20 +1,16 @@
 package bitirme.web;
 
+import bitirme.model.ClassicExam;
 import bitirme.model.User;
+import bitirme.service.ExamServiceWeb;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.servlet.view.InternalResourceViewResolver;
-import org.springframework.web.servlet.view.JstlView;
-
-import bitirme.model.ClassicExam;
-import bitirme.service.ExamServiceWeb;
 
 //import com
 //import com.bitirme.service.BitirmeService;
@@ -122,4 +118,15 @@ public class ExamControllerWeb {
 		examServiceWeb.createUser(user);
 		return "redirect:/candidates";
 	}
+
+
+	/*@RequestMapping(value = "/classicexam/getall" , method = RequestMethod.GET)
+	public String getAllClassicExam (){
+		try {
+			List<ClassicExam> classicExamList= examServiceWeb.getAllClassicExam();
+			return "";
+		}
+		catch (Exception e){
+			return "";
+		} */
 }

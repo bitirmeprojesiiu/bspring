@@ -1,10 +1,7 @@
 package bitirme.service;
 
 import bitirme.dao.imp.IExamDao;
-import bitirme.model.ClassicResult;
-import bitirme.model.Question;
-import bitirme.model.State;
-import bitirme.model.TestResult;
+import bitirme.model.*;
 import bitirme.service.imp.IExamService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -58,5 +55,16 @@ public class ExamService implements IExamService {
             examDao.addClassicExamResult(classicResult);
             return true;
         }
+    }
+
+
+    @Override
+    public List<ClassicExam> getAllClassicExam (){
+       return examDao.getAllClassicExam();
+    }
+
+    @Override
+    public List<TestExam> getAllTestExam (){
+        return examDao.getAllTestExam();
     }
 }

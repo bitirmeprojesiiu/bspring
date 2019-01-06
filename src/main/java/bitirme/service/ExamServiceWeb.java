@@ -1,12 +1,12 @@
 package bitirme.service;
 
-import java.util.List;
-
-//import com.bitirme.exception.ExamNotFoundException;
-
 import bitirme.model.ClassicExam;
 import bitirme.model.TestExam;
 import bitirme.model.User;
+
+import java.util.List;
+
+//import com.bitirme.exception.ExamNotFoundException;
 
 public interface ExamServiceWeb {
 	public List<ClassicExam> findAll();
@@ -17,4 +17,8 @@ public interface ExamServiceWeb {
 	void updateExam(ClassicExam exam);
 	void deleteExam(Long id);
 	void createUser(User user);
+
+	List<ClassicExam> getAllClassicExam();
+
+	List<TestExam> getAllTestExam();
 }
