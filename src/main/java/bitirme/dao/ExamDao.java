@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -271,3 +272,13 @@ public class ExamDao implements IExamDao {
     }
 }
 
+/*
+         List<TestExam> testExamList = entityManager.createQuery(query).getResultList();
+
+         for (int i=0; i<testExamList.size(); i++){
+            String startingDate = String.valueOf(testExamList.get(i).getExamStartingDate());
+            String finishingDate = String.valueOf(testExamList.get(i).getExamFinishingDate());
+            String time = testExamList.get(i).getDuration();
+
+         }
+ */

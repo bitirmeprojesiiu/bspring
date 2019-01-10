@@ -15,7 +15,7 @@ public class ClassicExam {
     private String number;
     private String format;
 
-  // @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss");
+ //  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss");
     private Date examStartingDate;
 
     private Date examFinishingDate;

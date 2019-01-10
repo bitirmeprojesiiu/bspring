@@ -132,6 +132,7 @@ public class ExamController implements Serializable {
     @GetMapping("getalltestexam")
     public ResponseEntity<List<TestExam>> getAllTestExam (){
         try {
+
             List<TestExam> classicExamList= examService.getAllTestExam();
             return new ResponseEntity<>(classicExamList,HttpStatus.OK);
         }
